@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using myLibrary.Models;
 
 namespace myLibrary.Controllers
-{  
+{
     public class HomeController : Controller
     {
         private LibraryContext db;
@@ -17,7 +17,7 @@ namespace myLibrary.Controllers
             db = context;
         }
         public IActionResult Index()
-        {            
+        {
             var lib = db.Libs.Include(a => a.Author).Include(b => b.Book).ToList();
             return View(lib);
         }
@@ -30,6 +30,25 @@ namespace myLibrary.Controllers
         {
             db.Libs.Add(library);
             db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public IActionResult Edit(int? id)
+        {
+            if (id != null)
+            {
+                //var library = db.Libraries.Include(a => a.AuthorId==id).Include(b => b.BookId==id).ToList();
+                //Lib library = db.Libs.FirstOrDefault(l => l.BookId == id);
+                var library = db.Libs.Where(l => l.BookId == id).Include(a => a.AuthorId == id).Include(b => b.BookId == id);
+                if (library != null)
+                    return View(library);
+            }
+            return NotFound();
+        }
+        [HttpPost]
+        public IActionResult Edit(Lib lib)
+        {
+            db.Libs.Update(lib);
+            db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 

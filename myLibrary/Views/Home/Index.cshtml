@@ -9,8 +9,8 @@
     @foreach (var l in Model)
     {
         <tr>
-            <td>@l.Book.NameBook</td>
-            <td>@l.Author.NameAuthor</td>
+            <td>@l.Book?.NameBook</td>
+            <td>@l.Author?.NameAuthor</td>
             <td>
                 <a asp-action="Details" asp-controller="Home" asp-route-id="@l.AuthorId">Подробнее</a> |
                 <a asp-action="Edit" asp-controller="Home" asp-route-id="@l.AuthorId">Изменить</a>
