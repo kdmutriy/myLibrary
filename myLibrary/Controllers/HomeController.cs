@@ -36,9 +36,9 @@ namespace myLibrary.Controllers
         {
             if (id != null)
             {
-                //var library = db.Libraries.Include(a => a.AuthorId==id).Include(b => b.BookId==id).ToList();
-                //Lib library = db.Libs.FirstOrDefault(l => l.BookId == id);
-                var library = db.Libs.Where(l => l.BookId == id).Include(a => a.AuthorId == id).Include(b => b.BookId == id);
+
+                Lib library = db.Libs.Include(a => a.Author).Include(b => b.Book).FirstOrDefault(b=>b.BookId==id);
+                
                 if (library != null)
                     return View(library);
             }

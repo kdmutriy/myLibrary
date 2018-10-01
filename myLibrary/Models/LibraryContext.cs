@@ -22,6 +22,17 @@ namespace myLibrary.Models
         {
             modelBuilder.Entity<Lib>().
                 HasKey(ba => new { ba.BookId, ba.AuthorId });
+
+            modelBuilder.Entity<Lib>()
+            .HasOne(sc => sc.Book)
+            .WithMany(s => s.Lib)
+            .HasForeignKey(sc => sc.BookId);
+
+            modelBuilder.Entity<Lib>()
+                .HasOne(sc => sc.Author)
+                .WithMany(c => c.Lib)
+                .HasForeignKey(sc => sc.AuthorId);
+
         }
     }
 }

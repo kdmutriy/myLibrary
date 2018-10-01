@@ -16,12 +16,20 @@ namespace myLibrary.Models
     {
         public int Id { get; set; }
         public string NameAuthor { get; set; }
-        public IList<Lib> Lib { get; set; }        
+        public IList<Lib> Lib { get; set; }
+        public Author()
+        {
+            Lib = new List<Lib>();
+        }
     }
     public class Book
     {
         public int Id { get; set; }
         public string NameBook { get; set; }
         public IList<Lib> Lib { get; set; }
+        public Book()
+        {
+            Lib = new List<Lib>();
+        }
     }
 }
