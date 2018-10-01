@@ -48,7 +48,7 @@ namespace myLibrary.Controllers
         public IActionResult Edit(Lib lib)
         {
             db.Libs.Update(lib);
-            db.SaveChangesAsync();
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
