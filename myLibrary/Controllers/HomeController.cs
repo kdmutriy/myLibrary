@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using myLibrary.Models;
+using myLibrary.ViewModel;
 
 namespace myLibrary.Controllers
 {
@@ -16,10 +17,14 @@ namespace myLibrary.Controllers
         {
             db = context;
         }
-        public IActionResult Index()
+        public IActionResult Index(string name)
         {
-            var lib = db.Libs.Include(a => a.Author).Include(b => b.Book).ToList();
-            return View(lib);
+            IQueryable<Lib> libs = db.Libs.Include(a => a.Author).Include(b => b.Book);
+           if (!String.IsNullOrEmpty(name))
+                libs = libs.Where(p => EF.Functions.Like(p.Book.NameBook,"%"+name+"%"));
+            //var lib = db.Libs.Include(a => a.Author).Include(b => b.Book).ToList();     
+           
+            return View(libs);
         }
         public IActionResult Create()
         {
@@ -36,9 +41,8 @@ namespace myLibrary.Controllers
         {
             if (id != null)
             {
-
                 Lib library = db.Libs.Include(a => a.Author).Include(b => b.Book).FirstOrDefault(b=>b.BookId==id);
-                
+              
                 if (library != null)
                     return View(library);
             }
