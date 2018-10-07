@@ -51,7 +51,7 @@ namespace myLibrary.Controllers
         [HttpPost]
         public IActionResult Edit(Lib lib)
         {
-            db.Libs.Update(lib);
+            db.Entry(lib).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
