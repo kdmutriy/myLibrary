@@ -32,7 +32,6 @@ namespace myLibrary.Models
                 .HasOne(sc => sc.Author)
                 .WithMany(c => c.Lib)
                 .HasForeignKey(sc => sc.AuthorId);
-
         }
     }
 }
