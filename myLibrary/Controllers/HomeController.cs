@@ -39,18 +39,16 @@ namespace myLibrary.Controllers
         {
             if (id != null)
             {
-                var libs = db.Books.Include(l => l.Lib).ThenInclude(a => a.Author).Where(b => b.Id == id).ToList();
-                //Lib library = db.Libs.Include(a => a.Author).Include(b => b.Book).FirstOrDefault(b=>b.BookId==id);
-              
+                var libs = db.Books.Include(l => l.Lib).ThenInclude(a => a.Author).FirstOrDefault(b => b.Id == id);
                 if (libs != null)
                     return View(libs);
             }
             return NotFound();
         }
         [HttpPost]
-        public IActionResult Edit(Lib lib)
+        public IActionResult Edit(Book book)
         {
-            db.Entry(lib).State = EntityState.Modified;
+            db.Entry(book).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
