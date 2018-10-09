@@ -18,12 +18,10 @@ namespace myLibrary.Controllers
             db = context;
         }
         public IActionResult Index(string name)
-        {
-            IQueryable<Lib> libs = db.Libs.Include(a => a.Author).Include(b => b.Book);
-           if (!String.IsNullOrEmpty(name))
-                libs = libs.Where(p => EF.Functions.Like(p.Book.NameBook,"%"+name+"%"));
-            //var lib = db.Libs.Include(a => a.Author).Include(b => b.Book).ToList();     
-           
+        {            
+            var libs = db.Books.Include(l => l.Lib).ThenInclude(a => a.Author).ToList();
+            if (!String.IsNullOrEmpty(name))
+                libs = libs.Where(p => EF.Functions.Like(p.NameBook, "%" + name + "%")).ToList();
             return View(libs);
         }
         public IActionResult Create()
@@ -41,10 +39,11 @@ namespace myLibrary.Controllers
         {
             if (id != null)
             {
-                Lib library = db.Libs.Include(a => a.Author).Include(b => b.Book).FirstOrDefault(b=>b.BookId==id);
+                var libs = db.Books.Include(l => l.Lib).ThenInclude(a => a.Author).Where(b => b.Id == id).ToList();
+                //Lib library = db.Libs.Include(a => a.Author).Include(b => b.Book).FirstOrDefault(b=>b.BookId==id);
               
-                if (library != null)
-                    return View(library);
+                if (libs != null)
+                    return View(libs);
             }
             return NotFound();
         }

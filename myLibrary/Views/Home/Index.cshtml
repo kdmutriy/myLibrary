@@ -1,4 +1,4 @@
-﻿@model IEnumerable<myLibrary.Models.Lib>
+﻿@model List<myLibrary.Models.Book>
         @{
             ViewBag.Title = "Все книги";
         }
@@ -13,7 +13,25 @@
         <table class="table">
             <tr><td>Книга</td><td>Автор</td></tr>
 
-            @foreach (var l in Model)
+            @foreach (var b in Model)
+            {
+            <tr>
+                <td>@b.NameBook</td>
+                <td>
+                    @foreach (var a in b.Lib.Select(a => a.Author).ToList())
+                    {
+                    <p>@a.NameAuthor </p>
+                    }
+                </td>
+                    <td>
+                        <a asp-action="Details" asp-controller="Home" asp-route-id="@b.Id">Подробнее</a> |
+                        <a asp-action="Edit" asp-controller="Home" asp-route-id="@b.Id">Изменить</a>
+                    </td>
+                </tr>
+
+            }
+
+            @*@foreach (var l in Model)
             {
                 <tr>
                     <td>@l.Book?.NameBook</td>
@@ -23,7 +41,7 @@
                         <a asp-action="Edit" asp-controller="Home" asp-route-id="@l.AuthorId">Изменить</a>
                     </td>
                 </tr>
-            }
+            }*@
         </table>
 
 
