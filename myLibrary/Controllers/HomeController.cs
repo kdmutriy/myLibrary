@@ -29,9 +29,9 @@ namespace myLibrary.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Lib library)
+        public IActionResult Create(Book lib)
         {
-            db.Libs.Add(library);
+            db.Books.Add(lib);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -46,9 +46,9 @@ namespace myLibrary.Controllers
             return NotFound();
         }
         [HttpPost]
-        public IActionResult Edit(Book book)
+        public IActionResult Edit(Book lib)
         {
-            db.Entry(book).State = EntityState.Modified;
+            db.Entry(lib).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
