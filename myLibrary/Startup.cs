@@ -24,7 +24,7 @@ namespace myLibrary
         public void ConfigureServices(IServiceCollection services)
         {
             // получаем строку подключения из файла конфигурации
-            string connection = Configuration.GetConnectionString("DefaultConnection");
+            string connection = "Server = (localdb)\\mssqllocaldb; Database = libraryDB; Trusted_Connection = True";
             // добавляем контекст MobileContext в качестве сервиса в приложение
             services.AddDbContext<LibraryContext>(options =>
                 options.UseSqlServer(connection));

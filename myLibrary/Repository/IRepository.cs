@@ -65,7 +65,7 @@ namespace myLibrary.Repository
 
         public IEnumerable<Author> GetAll()
         {            
-            return db.Authors.Include(o => o.Lib);
+            return db.Authors;
         }
 
         public Author Get(int id)

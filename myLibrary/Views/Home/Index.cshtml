@@ -1,35 +1,34 @@
-﻿@model List<myLibrary.Models.Book>
-        @{
-            ViewBag.Title = "Все книги";
-        }
-        <a asp-action="Create">Добавить книгу</a>
-        <form method="get">
-        <div class="form-inline">
-            <label class="control-label">Имя: </label>
-            @Html.TextBox("name")
-            <input type="submit" value="Фильтр" class="btn btn-default" />
-        </div>
-    </form>
-        <table class="table">
-            <tr><td>Книга</td><td>Автор</td></tr>
+﻿@model IEnumerable<myLibrary.Models.Book>
+@{
+    ViewBag.Title = "Все книги";
+}
+<a asp-action="Create">Добавить книгу</a>
+<table class="table">
+    <tr>
+        <th>
+            <a asp-action="Index" asp-route-sortState="@ViewBag.NameBookSort">
+                Имя
+            </a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortState="@ViewBag.YearPublish">
+                Год издания
+            </a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortState="@ViewBag.CountPage">
+                Количество страниц
+            </a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortState="@ViewBag.Author">
+                Автор
+            </a>
+        </th>
+    </tr>
+    @foreach (Book b in Model)
+    {
+        <tr><td>@b.NameBook</td><td>@b.YearPublish</td><td>@b.CountPage</td><td>@b.Author.NameAuthor</td></tr>
 
-            @foreach (var b in Model)
-            {
-            <tr>
-                <td>@b.NameBook</td>
-                <td>
-                    @foreach (var a in b.Lib.Select(a => a.Author).ToList())
-                    {
-                    <p>@a.NameAuthor </p>
-                    }
-                </td>
-                    <td>
-                        <a asp-action="Details" asp-controller="Home" asp-route-id="@b.Id">Подробнее</a> |
-                        <a asp-action="Edit" asp-controller="Home" asp-route-id="@b.Id">Изменить</a>
-                    </td>
-                </tr>
-
-            }
-
-        </table>
-
+    }
+</table>

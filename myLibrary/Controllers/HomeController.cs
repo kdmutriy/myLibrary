@@ -17,12 +17,35 @@ namespace myLibrary.Controllers
         {
             db = context;
         }
-        public IActionResult Index(string name)
-        {            
-            var libs = db.Books.Include(l => l.Lib).ThenInclude(a => a.Author).ToList();
+        public async Task<IActionResult> Index(SortState sortState=SortState.NameBookAsc)
+        {
+            /*var libs = db.Books.Include(l => l.Lib).ThenInclude(a => a.Author).ToList();
             if (!String.IsNullOrEmpty(name))
-                libs = libs.Where(p => EF.Functions.Like(p.NameBook, "%" + name + "%")).ToList();
-            return View(libs);
+                libs = libs.Where(p => EF.Functions.Like(p.NameBook, "%" + name + "%")).ToList();*/
+            IQueryable<Book> books = db.Books.Include(b => b.Author);
+            ViewData["NameBookSort"] = sortState == SortState.NameBookAsc ? SortState.NameBookDesc : SortState.NameBookAsc;
+            ViewData["YearPublish"] = sortState == SortState.YearPublishAsc ? SortState.YearPublishDesc : SortState.YearPublishAsc;
+            ViewData["CountPage"] = sortState == SortState.CountPageAsc ? SortState.CountPageDesc : SortState.CountPageAsc;
+            ViewData["Author"] = sortState == SortState.AuthorAsc ? SortState.AuthorDesc : SortState.AuthorAsc;
+            switch (sortState)
+            {
+                case SortState.NameBookDesc:
+                    books = books.OrderByDescending(s => s.NameBook);
+                    break;
+                case SortState.YearPublishDesc:
+                    books = books.OrderByDescending(s => s.YearPublish);
+                    break;
+                case SortState.CountPageDesc:
+                    books = books.OrderByDescending(s => s.CountPage);
+                    break;
+                case SortState.AuthorDesc:
+                    books = books.OrderByDescending(s => s.Author);
+                    break;
+                default:
+                    books = books.OrderBy(s => s.NameBook);
+                    break;
+            }
+            return View(await books.AsNoTracking().ToListAsync());
         }
         public IActionResult Create()
         {
@@ -34,18 +57,12 @@ namespace myLibrary.Controllers
             db.Books.Add(lib.Books);
             db.Authors.Add(lib.Authors);
             db.SaveChanges();
-            lib.Books.Lib.Add(new Lib { BookId = lib.Authors.Id, AuthorId = lib.Books.Id });
-
+           
             return RedirectToAction("Index");
         }
         public IActionResult Edit(int? id)
         {
-            if (id != null)
-            {
-                var libs = db.Books.Include(l => l.Lib).ThenInclude(a => a.Author).FirstOrDefault(b => b.Id == id);
-                if (libs != null)
-                    return View(libs);
-            }
+            
             return NotFound();
         }
         [HttpPost]
