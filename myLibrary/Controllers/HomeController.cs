@@ -29,10 +29,13 @@ namespace myLibrary.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Book lib)
+        public IActionResult Create(IndexViewModel lib)
         {
-            db.Books.Add(lib);
+            db.Books.Add(lib.Books);
+            db.Authors.Add(lib.Authors);
             db.SaveChanges();
+            lib.Books.Lib.Add(new Lib { BookId = lib.Authors.Id, AuthorId = lib.Books.Id });
+
             return RedirectToAction("Index");
         }
         public IActionResult Edit(int? id)
