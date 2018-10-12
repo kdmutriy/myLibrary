@@ -1,85 +1,34 @@
-﻿@model IEnumerable<myLibrary.Models.Lib>
-        @{
-            ViewBag.Title = "Все книги";
-        }
-        <a asp-action="Create">Добавить книгу</a>
-        <form method="get">
-        <div class="form-inline">
-            <label class="control-label">Имя: </label>
-            @Html.TextBox("name")
-            <input type="submit" value="Фильтр" class="btn btn-default" />
-        </div>
-    </form>
-        <table class="table">
-            <tr><td>Книга</td><td>Автор</td></tr>
-
-            @foreach (var l in Model)
-            {
-                <tr>
-                    <td>@l.Book?.NameBook</td>
-                    <td>@l.Author?.NameAuthor</td>
-                    <td>
-                        <a asp-action="Details" asp-controller="Home" asp-route-id="@l.AuthorId">Подробнее</a> |
-                        <a asp-action="Edit" asp-controller="Home" asp-route-id="@l.AuthorId">Изменить</a>
-                    </td>
-                </tr>
-            }
-        </table>
-
-
-@*@model myLibrary.ViewModel.FilterViewModel
-
+﻿@model IEnumerable<myLibrary.Models.Book>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewBag.Title = "Все книги";
 }
-<h1>Список пользователей</h1>
-<form method="get">
-    <div class="form-inline">
-        <label class="control-label">Имя: </label>
-        @Html.TextBox("name", Model.SelectedName, htmlAttributes: new { @class = "form-control" })
-        <input type="submit" value="Фильтр" class="btn btn-default" />
-    </div>
-</form>
-
+<a asp-action="Create">Добавить книгу</a>
 <table class="table">
     <tr>
         <th>
-            <a asp-action="Index"
-               asp-route-name="@(Model.SelectedName)">Имя</a>
+            <a asp-action="Index" asp-route-sortState="@ViewBag.NameBookSort">
+                Имя
+            </a>
         </th>
         <th>
-            <a asp-action="Index" asp-route-name="@(Model.SelectedName)">Возраст</a>
+            <a asp-action="Index" asp-route-sortState="@ViewBag.YearPublish">
+                Год издания
+            </a>
         </th>
         <th>
-            <a asp-action="Index" asp-route-name="@(Model.SelectedName)">Компания</a>
+            <a asp-action="Index" asp-route-sortState="@ViewBag.CountPage">
+                Количество страниц
+            </a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortState="@ViewBag.Author">
+                Автор
+            </a>
         </th>
     </tr>
-    @foreach (var u in Model.)
+    @foreach (Book b in Model)
     {
-        <tr><td>@u.Name</td><td>@u.Age</td><td>@u.Company.Name</td></tr>
+        <tr><td>@b.NameBook</td><td>@b.YearPublish</td><td>@b.CountPage</td><td>@b.Author.NameAuthor</td></tr>
+
     }
 </table>
-@if (Model.PageViewModel.HasPreviousPage)
-{
-    <a asp-action="Index"
-       asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
-       asp-route-name="@(Model.FilterViewModel.SelectedName)"
-       asp-route-company="@(Model.FilterViewModel.SelectedCompany)"
-       asp-route-sortorder="@(Model.SortViewModel.Current)"
-       class="btn btn-default btn">
-        <i class="glyphicon glyphicon-chevron-left"></i>
-        Назад
-    </a>
-}
-@if (Model.PageViewModel.HasNextPage)
-{
-    <a asp-action="Index"
-       asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
-       asp-route-name="@(Model.FilterViewModel.SelectedName)"
-       asp-route-company="@(Model.FilterViewModel.SelectedCompany)"
-       asp-route-sortorder="@(Model.SortViewModel.Current)"
-       class="btn btn-default btn">
-        Вперед
-        <i class="glyphicon glyphicon-chevron-right"></i>
-    </a>
-}*@

@@ -11,8 +11,8 @@ using System;
 namespace myLibrary.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20180930151414_MyMigration")]
-    partial class MyMigration
+    [Migration("20181010210101_MyLibMigration")]
+    partial class MyLibMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,7 +26,11 @@ namespace myLibrary.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Country");
+
                     b.Property<string>("NameAuthor");
+
+                    b.Property<int>("YearBirth");
 
                     b.HasKey("Id");
 
@@ -38,36 +42,28 @@ namespace myLibrary.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("AuthorId");
+
+                    b.Property<int>("CountPage");
+
                     b.Property<string>("NameBook");
 
+                    b.Property<string>("Publisher");
+
+                    b.Property<int>("YearPublish");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
 
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("myLibrary.Models.Lib", b =>
-                {
-                    b.Property<int>("BookId");
-
-                    b.Property<int>("AuthorId");
-
-                    b.HasKey("BookId", "AuthorId");
-
-                    b.HasIndex("AuthorId");
-
-                    b.ToTable("Libs");
-                });
-
-            modelBuilder.Entity("myLibrary.Models.Lib", b =>
+            modelBuilder.Entity("myLibrary.Models.Book", b =>
                 {
                     b.HasOne("myLibrary.Models.Author", "Author")
-                        .WithMany("Lib")
+                        .WithMany("Books")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("myLibrary.Models.Book", "Book")
-                        .WithMany("Lib")
-                        .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

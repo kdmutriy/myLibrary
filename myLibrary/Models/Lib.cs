@@ -5,31 +5,29 @@ using System.Threading.Tasks;
 
 namespace myLibrary.Models
 {
-    public class Lib
+    public class Book
     {
-        public int BookId { get; set; }
-        public Book Book { get; set; }
+        public int Id { get; set; }
+        public string NameBook { get; set; }
+        public int YearPublish { get; set; }
+        public string Publisher { get; set; }
+        public int CountPage { get; set; }
         public int AuthorId { get; set; }
         public Author Author { get; set; }
+
+
     }
     public class Author
     {
         public int Id { get; set; }
         public string NameAuthor { get; set; }
-        public IList<Lib> Lib { get; set; }
+        public int YearBirth{get;set;}
+        public string Country { get; set; }
+        public List<Book> Books { get; set; }
         public Author()
         {
-            Lib = new List<Lib>();
+            Books = new List<Book>();
         }
     }
-    public class Book
-    {
-        public int Id { get; set; }
-        public string NameBook { get; set; }
-        public IList<Lib> Lib { get; set; }
-        public Book()
-        {
-            Lib = new List<Lib>();
-        }
-    }
+   
 }
