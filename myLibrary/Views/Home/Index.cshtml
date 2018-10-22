@@ -4,31 +4,10 @@
 }
 <a asp-action="Create">Добавить книгу</a>
 <table class="table">
-    <tr>
-        <th>
-            <a asp-action="Index" asp-route-sortState="@ViewBag.NameBookSort">
-                Имя
-            </a>
-        </th>
-        <th>
-            <a asp-action="Index" asp-route-sortState="@ViewBag.YearPublish">
-                Год издания
-            </a>
-        </th>
-        <th>
-            <a asp-action="Index" asp-route-sortState="@ViewBag.CountPage">
-                Количество страниц
-            </a>
-        </th>
-        <th>
-            <a asp-action="Index" asp-route-sortState="@ViewBag.Author">
-                Автор
-            </a>
-        </th>
-    </tr>
+   
     @foreach (Book b in Model)
     {
-        <tr><td>@b.NameBook</td><td>@b.YearPublish</td><td>@b.CountPage</td><td>@b.Author.NameAuthor</td></tr>
+        <tr><td>@b.NameBook</td><td>@b.YearPublish</td><td>@b.CountPage</td></tr>
 
     }
 </table>
