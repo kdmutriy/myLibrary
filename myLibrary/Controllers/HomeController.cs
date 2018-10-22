@@ -20,8 +20,8 @@ namespace myLibrary.Controllers
         }
         public IActionResult Index()
         {
-            var book = unitOfWork.Books.GetAll();
-            
+            IEnumerable<Book> book = unitOfWork.Books.GetAll();
+           
             return View(book);
         }
         public IActionResult Create()

@@ -18,7 +18,7 @@ namespace myLibrary.Repository
 
         public IEnumerable<Book> GetAll()
         {
-            return db.Books;
+            return db.Books.Include(a=>a.Author);
         }
 
         public Book Get(int id)

@@ -7,7 +7,7 @@
    
     @foreach (Book b in Model)
     {
-        <tr><td>@b.NameBook</td><td>@b.YearPublish</td><td>@b.CountPage</td></tr>
+        <tr><td>@b.NameBook</td><td>@b.YearPublish</td><td>@b.CountPage</td><td>@b.Author.NameAuthor</td></tr>
 
     }
 </table>
