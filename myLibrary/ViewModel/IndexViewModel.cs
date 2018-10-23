@@ -9,6 +9,6 @@ namespace myLibrary.ViewModel
     public class IndexViewModel
     {
         public Book Books { get; set; }
-        public Author Authors { get; set; }
+        public IEnumerable<Author> Authors { get; set; }
     }
 }
