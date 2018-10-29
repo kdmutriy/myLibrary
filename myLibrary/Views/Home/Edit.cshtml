@@ -8,7 +8,7 @@
         <input type="text" asp-for="NameBook" class="form-control" />
     </div>
     <div class="form-group">
-        @foreach (var item in Model.Lib.Select(a => a.Author))
+        @foreach (var item in Model.Author.Books.Select(a => a.Author))
         {
         <label asp-for="@item.NameAuthor" class="control-label">Имя Автора</label>
         <input type="text" asp-for="@item.NameAuthor" class="form-control" />
