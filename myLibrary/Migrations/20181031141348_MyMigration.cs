@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
 
 namespace myLibrary.Migrations
 {
-    public partial class MyLibMigration : Migration
+    public partial class MyMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,9 +13,9 @@ namespace myLibrary.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Country = table.Column<string>(nullable: true),
                     NameAuthor = table.Column<string>(nullable: true),
-                    YearBirth = table.Column<int>(nullable: false)
+                    YearBirth = table.Column<int>(nullable: false),
+                    Country = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -30,11 +28,11 @@ namespace myLibrary.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AuthorId = table.Column<int>(nullable: false),
-                    CountPage = table.Column<int>(nullable: false),
                     NameBook = table.Column<string>(nullable: true),
+                    YearPublish = table.Column<int>(nullable: false),
                     Publisher = table.Column<string>(nullable: true),
-                    YearPublish = table.Column<int>(nullable: false)
+                    CountPage = table.Column<int>(nullable: false),
+                    AuthorId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,6 +43,32 @@ namespace myLibrary.Migrations
                         principalTable: "Authors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Authors",
+                columns: new[] { "Id", "Country", "NameAuthor", "YearBirth" },
+                values: new object[] { 1, "Россия", "Пушкин Александр Сергеевич", 1799 });
+
+            migrationBuilder.InsertData(
+                table: "Authors",
+                columns: new[] { "Id", "Country", "NameAuthor", "YearBirth" },
+                values: new object[] { 2, "Россия", "Лермонтов Михаил Юрьевич", 1838 });
+
+            migrationBuilder.InsertData(
+                table: "Authors",
+                columns: new[] { "Id", "Country", "NameAuthor", "YearBirth" },
+                values: new object[] { 3, "Россия", "Булгаков Михаил Афанасьевич", 1891 });
+
+            migrationBuilder.InsertData(
+                table: "Books",
+                columns: new[] { "Id", "AuthorId", "CountPage", "NameBook", "Publisher", "YearPublish" },
+                values: new object[,]
+                {
+                    { 1, 1, 160, "Капитанская дочька", "НИГМА", 1836 },
+                    { 2, 1, 24, "Полтава", "Художественный фонд", 1829 },
+                    { 3, 2, 224, "Герой нашего времени", "Азбука", 1985 },
+                    { 4, 3, 480, "Мастер и Маргарита", "Азбука", 1960 }
                 });
 
             migrationBuilder.CreateIndex(

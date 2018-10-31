@@ -18,17 +18,20 @@ namespace myLibrary.Models
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Author>().HasData(
+                new Author[]
+                {
+                    new Author{Id=1,NameAuthor="Пушкин Александр Сергеевич",YearBirth=1799,Country="Россия"},
+                    new Author{Id=2, NameAuthor="Лермонтов Михаил Юрьевич",YearBirth=1838,Country="Россия"},
+                    new Author{Id=3, NameAuthor="Булгаков Михаил Афанасьевич",YearBirth=1891,Country="Россия"}
+                });
             modelBuilder.Entity<Book>().HasData(
                 new Book[]
                 {
-                    new Book{NameBook="Капитанская дочька",YearPublish=1836, Publisher="НИГМА", CountPage=160,
-                        Author =new Author{NameAuthor="Пушкин Александр Сергеевич",YearBirth=1799,Country="Россия"} },
-                    new Book{NameBook="Полтава",YearPublish=1829, Publisher="Художественный фонд", CountPage=24,
-                       Author =new Author{NameAuthor="Пушкин Александр Сергеевич",YearBirth=1799,Country="Россия"} },
-                    new Book{NameBook="Герой нашего времени",YearPublish=1985, Publisher="Азбука", CountPage=224,
-                        Author =new Author{NameAuthor="Лермонтов Михаил Юрьевич",YearBirth=1838,Country="Россия"} },
-                    new Book{NameBook="Мастер и Маргарита",YearPublish=1960, Publisher="Азбука", CountPage=480,
-                        Author =new Author{NameAuthor="Булгаков Михаил Афанасьевич",YearBirth=1891,Country="Россия"} }
+                    new Book{Id=1,AuthorId=1, NameBook="Капитанская дочька",YearPublish=1836, Publisher="НИГМА", CountPage=160},
+                    new Book{Id=2,AuthorId=1, NameBook="Полтава",YearPublish=1829, Publisher="Художественный фонд", CountPage=24},
+                    new Book{Id=3,AuthorId=2, NameBook="Герой нашего времени",YearPublish=1985, Publisher="Азбука", CountPage=224},
+                    new Book{Id=4,AuthorId=3, NameBook="Мастер и Маргарита",YearPublish=1960, Publisher="Азбука", CountPage=480}
                 });
         }
     }
